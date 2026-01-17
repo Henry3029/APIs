@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title> Document </title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<img src="#">
+
+<script>
+const img = document.querySelector("img");
+
+const btn = document.createElement("button");
+btn.textContent = "Loading...";
+
+btn.classList.add("btn");
+
+btn.addEventListener("click", () => {
+ fetch('https://api.giphy.com/v1/gifs/translate?api_key=tUxChpzZO6hOj4gs7mRjfvcCAqS0BCMA&s=cats').then(function(response) {
+return response.json();
+}).then(function(data) {
+if(!data.data || !data.data.images) {
+console.log('No data returned, try again later');
+return;
+}
+   img.src = data.data.images.original.url;
+    }).catch(err => console.error(err));
+    btn.textContent = "New Gif";
+    });
+    
+    document.body.appendChild(btn);
+    
+</script>
+</body>
+</html>
