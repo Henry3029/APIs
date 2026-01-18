@@ -8,35 +8,54 @@
 <body>
 
 <input id="myInput" type="text" placeholder="Search Gif....">
-<button id="submitBtn">Submit</button>
+<button id="submitBtn">Search</button>
+<p id="myMessage"></p>
 
 <img src="#">
 
 <script>
 const img = document.querySelector("img");
+const p = document.getElementById("myMessage");
     
    const input = document.getElementById("myInput");
    const submitBtn = document.getElementById("submitBtn");
    submitBtn.addEventListener('click',  () => {
+   searchGif();
+   });
+   
+   input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    searchGif();
+  }
+});
+   
+   
+   
+   function searchGif() {
    const query = input.value.trim();
-   if(!query) return alert("you have to type Something");
-   submitBtn.textContent = "Looding.. ";
+   if(!query) return p.textContent = "Please type something to search."
+   
    console.log("user clicked:", query);
+   submitBtn.textContent = "Looding... ";
    
    fetch(`https://api.giphy.com/v1/gifs/translate?api_key=tUxChpzZO6hOj4gs7mRjfvcCAqS0BCMA&s=${query}`).then(function(response) {
 return response.json();
 }).then(data => {
 if(!data.data || !data.data.images) {
 console.log("sorry No Gif Found");
+p.textContent = "Sorry No Gif Found";
+submitBtn.textContent = "Try Again";
 return;
 }
 img.src = data.data.images.original.url;
-}).catch(err => console.error(err));
-
-submitBtn.textContent = "Search";
+submitBtn.textContent = "New Gif";
+p.textContent = "";
+}).catch(err => {
+console.error(err);
+p.textContent = "Network error. please try again."
+});
    
-   });
-   
+   }
     
 </script>
 </body>

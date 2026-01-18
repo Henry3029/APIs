@@ -13,3 +13,8 @@
 		padding: 8px; 
 		font-size: 12px;
 		}
+		#myMessage {
+			color: red; 
+			font-size: 14px; 
+			margin: 24px auto;
+			}
